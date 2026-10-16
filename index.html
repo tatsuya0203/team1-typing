@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#bfd1aa">
+  <title>寿司打風 — ことばのタイピング練習</title>
+  <link rel="stylesheet" href="kadai.css">
+  <script src="kadai6.js" defer></script>
+</head>
+<body data-phase="idle">
+  <main class="app">
+    <section id="welcome-screen" class="welcome game-frame" aria-labelledby="welcome-title">
+      <div class="scene-background" aria-hidden="true"><div class="wall"></div><div class="belt"></div><div class="counter"></div></div>
+      <header class="welcome-heading"><p class="eyebrow">お寿司で楽しくタイピング練習！</p><h1 id="welcome-title"><span>寿</span><span>司</span><span>打</span></h1><p class="subtitle">— ことばのタイピング練習版 —</p></header>
+      <nav class="title-menu" aria-label="メニュー">
+        <button id="startbtn" class="wood-button" type="button">スタート</button>
+        <details class="menu-details" name="title-panels"><summary class="wood-button">遊び方</summary><div class="menu-panel"><h2>遊び方</h2><p>表示されたことばを入力して、お寿司を食べよう！<br>全10問・時間制限なしの練習コースです。</p><p><strong>日本語入力のままでもOK。</strong><br>ひらがな・カタカナは、漢字に変換せずEnterで確定すると進みます。全角英数にも対応。</p><p>ローマ字は訓令式ベース：ち=ti、つ=tu、し=si、ふ=hu、じょ=zyo。「ん」はnn。ごめんなさい=gomennnasai。長音は読みの母音（誕生日=tannzyoubi）、ーは -。助詞は は=ha、を=wo。</p><p>ミスは消さずに続けて入力。変換中以外はEscで一時停止できます。正解文字数はローマ字換算です。</p><p class="panel-hint">「遊び方」をもう一度押すと閉じます。</p></div></details>
+        <details class="menu-details" name="title-panels"><summary class="wood-button">設定</summary><div class="menu-panel settings-panel"><h2>表示設定</h2><label><input id="show-reading" type="checkbox" checked> ふりがなを表示する</label><label><input id="show-roma" type="checkbox" checked> ローマ字を表示する</label><p>入力方式は自動で対応します。<br>英数入力・全角英数・確定かなが使えます。</p><p class="panel-hint">「設定」をもう一度押すと閉じます。</p></div></details>
+      </nav>
+      <div class="title-sushi" aria-hidden="true"><div class="plate red-plate"><i class="nigiri tuna"></i><i class="nigiri tuna"></i></div><div class="plate blue-plate"><i class="nigiri egg"></i><i class="nigiri egg"></i></div><div class="plate green-plate"><i class="maki"></i><i class="maki"></i><i class="maki"></i></div></div>
+      <p class="title-instruction">日本語入力のままでOK！<br><span>かなは Enter で確定 ／ 全10問・時間制限なし</span></p>
+      <span class="version">ことば練習版</span>
+    </section>
+
+    <section id="play-screen" class="play-screen game-frame" aria-label="タイピング練習" hidden>
+      <div class="scene-background" aria-hidden="true"><div class="wall"></div><div class="belt"></div><div class="counter"></div></div>
+      <div class="play-toolbar"><div class="remaining">残り <strong id="remaining-dishes">10</strong> 皿</div><div class="meter"><span>完食メーター</span><progress id="progress" value="0" max="10" aria-label="完了した問題数"></progress></div><button id="pausebtn" class="small-button" type="button">中断 <kbd>Esc</kbd></button></div>
+      <div class="play-lane" aria-hidden="true"><div id="dish-emblem" class="plate blue-plate" data-fish="salmon"><i class="nigiri"></i><i class="nigiri"></i></div></div>
+      <div class="table-props" aria-hidden="true"><div class="tea-cup"><span>寿司</span></div><div class="soy-dish"></div><div class="plate-stack"><i></i><i></i><i></i><i></i></div></div>
+      <section id="game" class="game" tabindex="-1" aria-labelledby="bunsyou" aria-describedby="play-help">
+        <div class="game-top"><span id="progress-text">1 皿目 / 全10皿</span><span id="count" role="status">準備中</span></div>
+        <h2 id="bunsyou">まもなく開店です</h2><p id="reading" class="reading"></p>
+        <div class="romacenter" aria-label="入力するローマ字"><span id="altype"></span><span id="nextchar"></span><span id="roma"></span></div>
+        <div class="ime-zone"><textarea id="ime-input" rows="1" aria-label="タイピング入力。日本語入力はかなで確定" aria-describedby="play-help" autocomplete="off" autocapitalize="off" spellcheck="false" disabled></textarea></div><p id="feedback" role="status"></p>
+      </section>
+      <div class="score-strip"><span>お召し上がり <strong id="dish-count">0 皿</strong></span><span>練習コース <strong>全10問</strong></span><span>時間制限 <strong>なし</strong></span></div>
+      <p id="play-help" class="play-help">日本語入力は、かなのまま Enter で確定。<br>英数・全角英数でも入力できます。</p>
+      <section id="pause-panel" class="pause-panel" aria-labelledby="pause-title" hidden><div class="pause-card"><h2 id="pause-title">一時停止中</h2><p>確定済みの進捗は残っています。<br>未確定の変換は取り消します。</p><button id="resumebtn" class="wood-button" type="button">続きから再開</button><button id="quitbtn" class="wood-button" type="button">タイトルに戻る</button><p>Escでも再開できます</p></div></section>
+    </section>
+
+    <section id="result-screen" class="result-screen game-frame" aria-labelledby="result-title" hidden>
+      <div class="scene-background" aria-hidden="true"><div class="wall"></div><div class="belt"></div><div class="counter"></div></div>
+      <div class="result-paper"><p class="result-course">おまかせ10皿コース【練習】</p><h2 id="result-title">10皿、完食！</h2><p id="finishtext" role="status"></p><div class="result" aria-label="練習成績"><div><span>正しく打った文字数</span><strong id="correct">0 文字</strong></div><div><span>ミスタイプ数</span><strong id="incorrect">0 回</strong></div><div><span>正答率</span><strong id="car">—</strong></div></div><p class="score-note">正解文字数はローマ字換算です</p></div>
+      <div class="result-actions"><button id="retrybtn" class="wood-button" type="button">もう一度</button><button id="homebtn" class="wood-button" type="button">タイトルに戻る</button></div>
+    </section>
+  </main>
+  <p class="outside-note">ことばのタイピング練習 · 日本語入力対応</p>
+</body>
+</html>
